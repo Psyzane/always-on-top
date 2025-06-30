@@ -11,13 +11,13 @@
    - yet to check on another windows
 
 ## How to use:
-### Script version-
-   1. Run the script.
-   2. It will prompt you to enter part of the window title (e.g., "Visual Studio Code" or "Chrome").
-   3. It will find the first matching window and attempt to set it "always on top".
-   4. To reverse, run the script again and select the window, or close the application.
-### exe version-
-   1. Download and Run
-   2. Focus on the window to fix on top
-   3. Press 'Ctrl + Win' to fix the focused window on top
-   4. To remove or set another window on fix just press the 'Ctrl + Win' Hotkey(shortcut) again on the desired window
+1. Script version-
+   - Run the script.
+   - It will prompt you to enter part of the window title (e.g., "Visual Studio Code" or "Chrome").
+   - It will find the first matching window and attempt to set it "always on top".
+   - To reverse, run the script again and select the window, or close the application.
+2. exe version-
+   - Download and Run
+   - Focus on the window to fix on top
+   - Press 'Ctrl + Win' to fix the focused window on top
+   - To remove or set another window on fix just press the 'Ctrl + Win' Hotkey(shortcut) again on the desired window
