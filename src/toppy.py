@@ -2,9 +2,9 @@ import win32gui
 import win32con
 import keyboard
 import time
-import sys
 
-HOTKEY_COMBO = 'ctrl+shift+win+z'
+
+HOTKEY_COMBO = 'ctrl+win'
 TARGET_WINDOW_KEYWORD = 'code'  # or 'chrome', etc.
 last_topmost_hwnd  = None # global tracker
 
