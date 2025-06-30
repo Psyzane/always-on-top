@@ -1,5 +1,5 @@
 # toppy (always-on-top app)
-*sets a specific application window to be "Always on Top" on Windows.*
+### *sets a specific application window to be "Always on Top" on Windows.*
 
 ## Requirements:
 1. script version-
