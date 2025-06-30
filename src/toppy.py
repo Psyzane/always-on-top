@@ -2,23 +2,13 @@ import win32gui
 import win32con
 import keyboard
 import time
+import sys
 
 
 HOTKEY_COMBO = 'ctrl+win'
+CLI_COMBO = 'ctrl+1'
 TARGET_WINDOW_KEYWORD = 'code'  # or 'chrome', etc.
 last_topmost_hwnd  = None # global tracker
-
-
-def remove_always_on_top_from_all_windows():
-    def enum_handler(hwnd, ctx):
-        if win32gui.IsWindowVisible(hwnd):
-            style = win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE)
-            if style & win32con.WS_EX_TOPMOST:
-                win32gui.SetWindowPos(hwnd, win32con.HWND_NOTOPMOST, 0, 0, 0, 0,
-                                      win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
-                print(f"Removed topmost from: {win32gui.GetWindowText(hwnd)}")
-
-    win32gui.EnumWindows(enum_handler, None)    
 
 
 def toggle_topmost_for_focused_window():
@@ -42,6 +32,18 @@ def toggle_topmost_for_focused_window():
         print("------------------------------")
         print("No focused window found.")
         print("------------------------------")
+
+
+def remove_always_on_top_from_all_windows():
+    def enum_handler(hwnd, ctx):
+        if win32gui.IsWindowVisible(hwnd):
+            style = win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE)
+            if style & win32con.WS_EX_TOPMOST:
+                win32gui.SetWindowPos(hwnd, win32con.HWND_NOTOPMOST, 0, 0, 0, 0,
+                                      win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
+                print(f"Removed topmost from: {win32gui.GetWindowText(hwnd)}")
+
+    win32gui.EnumWindows(enum_handler, None)    
 
 
 def set_window_always_on_top(hwnd):
@@ -110,19 +112,41 @@ def find_and_set_topmost():
     set_window_always_on_top(hwnd_to_modify)
 
 
-# Set up hotkey
+def enter_cli_mode():
+    print("\n[ CLI MODE ]")
+    find_and_set_topmost()
+
+
+# START HERE ---------------------------------------------------------------------
+print("Welcome to the version 1.0(beta) of toppy")
+# Set up hotkey for top toggle
 keyboard.add_hotkey(HOTKEY_COMBO, toggle_topmost_for_focused_window)
-print(f"Running... Press {HOTKEY_COMBO} to toggle topmost for windows containing '{TARGET_WINDOW_KEYWORD}'")
+print(f"Running... \nPress '{HOTKEY_COMBO}' to toggle topmost for Focused Window")
+# Set up hotkey for CLI Mode
+keyboard.add_hotkey(CLI_COMBO, enter_cli_mode)
+print(f"Enter {CLI_COMBO} to go to use CLI - ")
 
 
 # Keep the script alive
-while True:
-    time.sleep(1)
-    if (input("Enter 1 to go to use CLI") == "1"):
-        break
+def main():
+    print("Type '--toppy-help' for help or 'exit' to quit.\n")
+    
+    while True:
+        time.sleep(1)
+        user_input = input()
+        if user_input.strip().lower() == '--toppy-help':
+            print("---- Help is in writing currently!!! -----")
+            # Replace `help()` with your actual help function if needed
+            break
+        elif user_input.strip().lower() == 'exit':
+            print("Exiting Toppy...")
+            break
 
 
-# Calls the script only if its a main script not a import
+def help():
+    print("---- Help is in writing currently!!! -----")
+
+
+# Calls the script only if its a main script not an import
 if __name__ == '__main__':
-    find_and_set_topmost()
-
+    main()
