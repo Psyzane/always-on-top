@@ -2,9 +2,13 @@
 *sets a specific application window to be "Always on Top" on Windows.*
 
 ## Requirements:
+1. script version-
    - Python installed (e.g., Python 3.x)
    - pywin32 library: pip install pywin32
-   - keyboard: pip install keyboard
+   - keyboard library: pip install keyboard
+2. exe version:
+   - can be run on any window 11 devices
+   - yet to check on another windows
 
 ## How to use (script version):
    1. Run the script.
