@@ -3,6 +3,7 @@ import win32con
 
 last_topmost_hwnd = None  # Make sure this is initialized
 
+
 def set_window_always_on_top(hwnd):
     win32gui.SetWindowPos(
         hwnd,
@@ -14,9 +15,25 @@ def set_window_always_on_top(hwnd):
         win32con.SWP_NOMOVE | win32con.SWP_NOSIZE,
     )
 
+
 def remove_always_on_top_from_all_windows():
-    # Optional: loop over known windows to clear topmost (implement as needed)
-    pass
+    def enum_handler(hwnd, ctx):
+        if win32gui.IsWindowVisible(hwnd):
+            style = win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE)
+            if style & win32con.WS_EX_TOPMOST:
+                win32gui.SetWindowPos(
+                    hwnd,
+                    win32con.HWND_NOTOPMOST,
+                    0,
+                    0,
+                    0,
+                    0,
+                    win32con.SWP_NOMOVE | win32con.SWP_NOSIZE,
+                )
+                print(f"Removed topmost from: {win32gui.GetWindowText(hwnd)}")
+
+    win32gui.EnumWindows(enum_handler, None)
+
 
 def toggle_topmost_for_window(hwnd):
     global last_topmost_hwnd
@@ -42,9 +59,12 @@ def toggle_topmost_for_window(hwnd):
     else:
         print("No window handle provided.")
 
+
 def toggle_topmost_by_title(window_name):
     def enum_windows_callback(hwnd, results):
-        if win32gui.IsWindowVisible(hwnd) and window_name in win32gui.GetWindowText(hwnd):
+        if win32gui.IsWindowVisible(hwnd) and window_name in win32gui.GetWindowText(
+            hwnd
+        ):
             results.append(hwnd)
 
     matched_windows = []
